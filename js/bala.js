@@ -10,6 +10,8 @@ class Bala{
 
         this.img = new Image();
         this.img.src = srcBala;
+
+        this.estado = 1;
     }
     dibujar(){
         // Area de colision
@@ -29,7 +31,7 @@ class Bala{
 
     }
     colision(enemigo){
-        return Math.hypot(enemigo.x - this.x, enemigo.y - this.y) <= enemigo.r + Math.max(this.w, this.h) / 2;
+        return Math.hypot(enemigo.x - this.x, enemigo.y - this.y) <= enemigo.r + Math.max(this.w, this.h)/2;
     }
     mover(){
         this.dibujar();

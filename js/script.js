@@ -16,6 +16,18 @@ let torresDisponibles = [
         precio: 100
     },
     {
+        // Hielo
+        clase: "hielo",
+        src: "../img/hielo.png",
+        alcance: 120,
+        velBala: 10,
+        tiempoAtaque: 60,
+        factorDisminucion: 0.7,
+        tiempoCongelado: 60,
+        radioEfecto: 50,
+        precio: 200
+    },
+    {
         // Metralleta (rojo)
         clase: "torre",
         src: "../img/tanque_rojo.png",
@@ -36,24 +48,12 @@ let torresDisponibles = [
         precio: 1500
     },
     {
-        // Hielo
-        clase: "hielo",
-        src: "../img/hielo.png",
-        alcance: 150,
-        velBala: 10,
-        tiempoAtaque: 60,
-        factorDisminucion: 0.7,
-        tiempoCongelado: 60,
-        radioEfecto: 50,
-        precio: 200
-    },
-    {
         // Canon
         clase: "canon",
         src: "../img/canon.png",
         alcance: 80,
         velBala: 10,
-        dano: 5,
+        dano: 10,
         tiempoAtaque: 60 * 3,
         radioEfecto: 50,
         precio: 5000
@@ -69,7 +69,7 @@ const limiteParticulas = 500;
 const cantParticulas = 3;
 
 // Config creacion enemigos
-let tiempoAumentarDificultad = 60 * 5;
+let tiempoAumentarDificultad = 60 * 7;
 let i = 0;
 let limiteTiempoEnemigos = 1; // Tiene que ser minimo 1 o no funciona el modulo
 let tiempoEnemigos = 120;
@@ -211,6 +211,7 @@ function loop(){
 
         if(enemigo.x - enemigo.r >= canvas.width) juegoTerminado = true;
     })
+    enemigos = enemigos.filter(e => e.nivel > 0);
 
     // Estado de juego
     comprobarEstadoJuego();

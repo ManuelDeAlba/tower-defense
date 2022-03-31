@@ -80,7 +80,7 @@ class Torre{
             bala.mover();
     
             // Choque de bala con enemigo
-            enemigos.forEach((enemigo, indiceEnemigo) => {
+            enemigos.forEach(enemigo => {
                 if(bala.colision(enemigo)){
                     // Sumar el dinero de acuerdo al daño de la bala y de la vida restante
                     if(enemigo.nivel >= bala.dano) dinero += bala.dano;
@@ -93,11 +93,12 @@ class Torre{
                         particulas.push(new Particula({x: enemigo.x, y: enemigo.y, color: enemigo.color}));
                     }
     
-                    // Se borra el enemigo y la bala
-                    if(enemigo.nivel <= 0) enemigos.splice(indiceEnemigo, 1);
-                    this.balas.splice(indiceBala, 1);
+                    bala.estado = 0;
                 }
             })
+
+            // Se borran todos los enemigos y balas necesarios
+            this.balas = this.balas.filter(b => b.estado);
     
             // Borrar las balas que salen del canvas
             if(bala.x < 0 || bala.x + bala.w > canvas.width || bala.y < 0 || bala.y + bala.h > canvas.height){

@@ -16,26 +16,29 @@ class Canon extends Torre{
         super({src, x, y, alcance, precio, velBala, dano, tiempoAtaque});
         this.radioEfecto = radioEfecto;
 
-        this.wBala = 10;
-        this.hBala = 10;
+        this.wBala = 20;
+        this.hBala = 20;
         this.srcBala = "../../img/bala_canon.png";
     }
     mover(){
         // Funcionamiento de las balas
-        this.balas.forEach((bala, indiceBala) => {
+        this.balas.forEach(bala => {
             bala.mover();
     
             // Choque de bala con enemigo
-            enemigos.forEach((enemigo, indiceEnemigo) => {
+            for(let i = 0; i < enemigos.length; i++){
+                let enemigo = enemigos[i];
+
+                // Si choca con cualquiera, hace el daño y sale del for
+                // para evitar daño extra
                 if(bala.colision(enemigo)){
-                    // Al chocar, toma en cuenta el radio del efecto
                     bala.velX = bala.velY = 0;
                     // El ancho debe ser menor o igual que el alto
                     bala.w = this.radioEfecto * (bala.w/bala.h);
                     bala.h = this.radioEfecto;
                     
-                    enemigos.forEach((e, iE) => {
-                        // Ahora compara con el radio del efecto
+                    enemigos.forEach(e => {
+                        // Ahora compara con el nuevo tamaño
                         if(bala.colision(e)){
                             // Sumar el dinero de acuerdo al daño de la bala y de la vida restante
                             if(e.nivel >= bala.dano) dinero += bala.dano;
@@ -48,19 +51,22 @@ class Canon extends Torre{
                                 particulas.push(new Particula({x: e.x, y: e.y, color: e.color}));
                             }
         
-                            // Se borra el enemigo y la bala
-                            if(e.nivel <= 0) enemigos.splice(iE, 1);
-                            this.balas.splice(indiceBala, 1);
+                            // Se borra la bala
+                            bala.estado = 0;
                         }
                     })
+                    break;
                 }
-            })
+            }
     
             // Borrar las balas que salen del canvas
             if(bala.x < 0 || bala.x + bala.w > canvas.width || bala.y < 0 || bala.y + bala.h > canvas.height){
-                this.balas.splice(indiceBala, 1);
+                bala.estado = 0;
             }
         })
+
+        // Se borran todos los enemigos y balas necesarios
+        this.balas = this.balas.filter(b => b.estado);
 
         // Dibuja la torre
         this.dibujar();

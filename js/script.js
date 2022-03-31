@@ -19,10 +19,10 @@ let torresDisponibles = [
         // Metralleta (rojo)
         clase: "torre",
         src: "../img/tanque_rojo.png",
-        alcance: 250,
+        alcance: 225,
         velBala: 20,
         dano: 1,
-        tiempoAtaque: 60 / 20,
+        tiempoAtaque: 60 / 10,
         precio: 1500
     },
     {
@@ -65,7 +65,7 @@ let juegoTerminado = false;
 let dinero = 100;
 
 // Config particulas
-const limiteParticulas = 500;
+const limiteParticulas = 250;
 const cantParticulas = 3;
 
 // Config creacion enemigos
@@ -244,4 +244,17 @@ canvas.addEventListener('click', e => {
     let y = e.clientY - canvas.getBoundingClientRect().top;
 
     ponerTorre(x, y);
+})
+
+canvas.addEventListener('mousemove', e => {
+    let x = e.clientX - canvas.getBoundingClientRect().left;
+    let y = e.clientY - canvas.getBoundingClientRect().top;
+
+    x = Math.floor(x / 40) * 40 + 20;
+    y = Math.floor(y / 40) * 40 + 20;
+
+    let torre = torres.find(torre => torre.x == x && torre.y == y);
+
+    torres.forEach(torre => torre.alcanceVisible = false);
+    if(torre) torre.alcanceVisible = true;
 })

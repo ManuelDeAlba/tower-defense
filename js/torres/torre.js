@@ -14,6 +14,7 @@ class Torre{
         this.x = x;
         this.y = y;
         this.r = 20;
+        this.alcanceVisible = false;
         this.alcance = alcance;
         this.velBala = velBala;
         this.dano = dano;
@@ -39,10 +40,12 @@ class Torre{
     }
     dibujar(){
         // Alcance
-        // ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        // ctx.beginPath();
-        // ctx.arc(this.x, this.y, this.alcance, 0, 2 * Math.PI);
-        // ctx.fill();
+        if(this.alcanceVisible){
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.alcance, 0, 2 * Math.PI);
+            ctx.fill();
+        }
 
         // Torre
         ctx.save();

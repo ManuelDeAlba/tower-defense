@@ -6,7 +6,7 @@ class Enemigo{
         this.color;
         
         this.nivel = nivel;
-        this.limiteVel = 2.5;
+        this.limiteVel = 2;
         this.vel;
 
         // Efecto congelacion

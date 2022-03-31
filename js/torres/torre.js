@@ -100,7 +100,7 @@ class Torre{
             })
     
             // Borrar las balas que salen del canvas
-            if( bala.x - bala.r < 0 || bala.x + bala.r > canvas.width || bala.y - bala.r < 0 || bala.y + bala.r > canvas.height){
+            if(bala.x < 0 || bala.x + bala.w > canvas.width || bala.y < 0 || bala.y + bala.h > canvas.height){
                 this.balas.splice(indiceBala, 1);
             }
         })

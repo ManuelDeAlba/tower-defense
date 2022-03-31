@@ -30,7 +30,9 @@ class Canon extends Torre{
                 if(bala.colision(enemigo)){
                     // Al chocar, toma en cuenta el radio del efecto
                     bala.velX = bala.velY = 0;
-                    bala.r = this.radioEfecto;
+                    // El ancho debe ser menor o igual que el alto
+                    bala.w = this.radioEfecto * (bala.w/bala.h);
+                    bala.h = this.radioEfecto;
                     
                     enemigos.forEach((e, iE) => {
                         // Ahora compara con el radio del efecto
@@ -55,7 +57,7 @@ class Canon extends Torre{
             })
     
             // Borrar las balas que salen del canvas
-            if( bala.x - bala.r < 0 || bala.x + bala.r > canvas.width || bala.y - bala.r < 0 || bala.y + bala.r > canvas.height){
+            if(bala.x < 0 || bala.x + bala.w > canvas.width || bala.y < 0 || bala.y + bala.h > canvas.height){
                 this.balas.splice(indiceBala, 1);
             }
         })

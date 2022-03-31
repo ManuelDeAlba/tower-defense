@@ -22,8 +22,8 @@ let torresDisponibles = [
         alcance: 225,
         velBala: 20,
         dano: 1,
-        tiempoAtaque: 60 / 10,
-        precio: 1500
+        tiempoAtaque: 60 / 20,
+        precio: 1000
     },
     {
         // Francotirador (verde)
@@ -33,7 +33,7 @@ let torresDisponibles = [
         velBala: 30,
         dano: 30,
         tiempoAtaque: 60 * 2,
-        precio: 1000
+        precio: 1500
     },
     {
         // Hielo
@@ -53,9 +53,9 @@ let torresDisponibles = [
         src: "../img/canon.png",
         alcance: 80,
         velBala: 10,
-        dano: 1,
+        dano: 5,
         tiempoAtaque: 60 * 3,
-        radioEfecto: 15,
+        radioEfecto: 50,
         precio: 5000
     }
 ];
@@ -65,18 +65,18 @@ let juegoTerminado = false;
 let dinero = 100;
 
 // Config particulas
-const limiteParticulas = 250;
+const limiteParticulas = 500;
 const cantParticulas = 3;
 
 // Config creacion enemigos
-let tiempoAumentarDificultad = 60 * 10; // 10 segundos
+let tiempoAumentarDificultad = 60 * 5;
 let i = 0;
 let limiteTiempoEnemigos = 1; // Tiene que ser minimo 1 o no funciona el modulo
-let tiempoEnemigos = 60;
+let tiempoEnemigos = 120;
 
 let nivelMinimo = 1;
 let nivelMaximo = 5;
-const limiteNivel = 200;
+const limiteNivel = 999;
 
 // Arreglos de objetos
 let torres = [];
@@ -193,8 +193,8 @@ function loop(){
     ctx.drawImage(fondo, 0, 0, canvas.width, canvas.height);
 
     // Particulas
-    // Optimizacion, no permite que haya más de 500 particulas
-    if(particulas.length > limiteParticulas) particulas.splice(0, particulas.length - 1000);
+    // Optimizacion, no permite que haya más de ciertas particulas
+    if(particulas.length > limiteParticulas) particulas.splice(0, particulas.length - limiteParticulas);
     particulas.forEach((particula, indiceParticula) => {
         particula.mover();
 

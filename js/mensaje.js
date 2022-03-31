@@ -2,7 +2,7 @@ class Mensaje{
     constructor({
         x,
         y,
-        msg,
+        msg = "[No se ha escrito un mensaje]",
         color = "#fff",
         tiempo = 60
     }){

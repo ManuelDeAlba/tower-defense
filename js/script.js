@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+const btnBorrar =document.querySelector('.controles__borrar');
 
 const fondo = new Image();
 fondo.src = "../img/fondo.png";
@@ -60,6 +61,7 @@ let torresDisponibles = [
     }
 ];
 let torreSeleccionada = 0;
+let quitandoTorre = 0;
 
 let juegoTerminado = false;
 let dinero = 100;
@@ -88,18 +90,23 @@ function crearBotones(){
     let html = "";
     torresDisponibles.forEach((torre, indice) => {
         html += `
-            <div class="controles__boton ${indice == 0 && "activo"}" data-torre="${indice}">
+            <div class="controles__boton controles__torre ${indice == 0 && "activo"}" data-torre="${indice}">
                 <p>$${torre.precio}</p>
                 <img src="${torre.src.slice(1)}" draggable="false">
             </div>
         `;
     })
-    document.querySelector('.controles').innerHTML = html;
+    document.querySelector('.controles__botones').innerHTML = html;
     
     // Evento click para seleccionar ua torre
-    let botones = document.querySelectorAll('.controles__boton');
+    let botones = document.querySelectorAll('.controles__torre');
     botones.forEach((boton) => {
         boton.addEventListener('click', e => {
+            // Se desactiva el boton de borrar
+            quitandoTorre = false;
+            btnBorrar.classList.remove('activo');
+
+            // Se pone activo el boton al que se le dio click
             botones.forEach(btn => {
                 btn.classList.remove("activo");
                 boton.classList.add("activo");
@@ -139,7 +146,18 @@ function comprobarEstadoJuego(){
 }
 
 let timeout;
-function ponerTorre(x, y){
+function modificarTorre(x, y){
+    // Posiciones redondeadas
+    x = Math.floor(x / 40) * 40 + 20;
+    y = Math.floor(y / 40) * 40 + 20;
+
+    if(quitandoTorre){
+        let posTorre = torres.findIndex(torre => torre.x == x && torre.y == y);
+        if(posTorre > -1) torres.splice(posTorre, 1);
+        else mensajes.push(new Mensaje({x, y, msg: "No hay torre en esa posición"}));
+        return;
+    }
+
     // Si no se tiene dinero, sale de la funcion
     if(dinero < torresDisponibles[torreSeleccionada].precio){
         mensajes.push(new Mensaje({x, y, msg: `No tienes suficiente dinero ($${torresDisponibles[torreSeleccionada].precio})`}));
@@ -147,10 +165,7 @@ function ponerTorre(x, y){
     }
 
     // Si la posicion es valida, pone la torre redondeando para que no se encimen
-    if(y < 10 * 20 || y > 14 * 20){
-        x = Math.floor(x / 40) * 40 + 20;
-        y = Math.floor(y / 40) * 40 + 20;
-
+    if(y < 10 || y > 14){
         let lugarDisponible = true;
 
         // Se verifica si está disponible el espacio para poner la torre
@@ -244,7 +259,7 @@ canvas.addEventListener('click', e => {
     let x = e.clientX - canvas.getBoundingClientRect().left;
     let y = e.clientY - canvas.getBoundingClientRect().top;
 
-    ponerTorre(x, y);
+    modificarTorre(x, y);
 })
 
 canvas.addEventListener('mousemove', e => {
@@ -258,4 +273,13 @@ canvas.addEventListener('mousemove', e => {
 
     torres.forEach(torre => torre.alcanceVisible = false);
     if(torre) torre.alcanceVisible = true;
+})
+
+btnBorrar.addEventListener('click', () => {
+    // Activa el boton para borrar una torre
+    document.querySelectorAll(".controles__torre").forEach(torre => {
+        torre.classList.remove("activo");
+    })
+    btnBorrar.classList.add("activo");
+    quitandoTorre = true;
 })

@@ -26,10 +26,13 @@ body{
     width: 100%;
     gap: 20px;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    /* justify-content: center; */
+    /* flex-wrap: wrap; */
     padding: 20px;
     background: rgba(0,0,0,.7);
+}
+.controles__botones{
+    display: flex;
 }
 .controles__boton{
     width: 70px;

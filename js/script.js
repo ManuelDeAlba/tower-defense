@@ -153,8 +153,17 @@ function modificarTorre(x, y){
 
     if(quitandoTorre){
         let posTorre = torres.findIndex(torre => torre.x == x && torre.y == y);
-        if(posTorre > -1) torres.splice(posTorre, 1);
-        else mensajes.push(new Mensaje({x, y, msg: "No hay torre en esa posición"}));
+        if(posTorre != -1){
+            // Si solo queda una torre, no la elimina, porque puede no tener dineros
+            // y se queda sin nada que hacer
+            if(torres.length == 1){
+                mensajes.push(new Mensaje({x, y, msg: "No puedes borrar tu última torre"})); 
+                return;
+            }
+
+            torres.splice(posTorre, 1);
+        } else mensajes.push(new Mensaje({x, y, msg: "No hay torre en esa posición"}));
+        
         return;
     }
 

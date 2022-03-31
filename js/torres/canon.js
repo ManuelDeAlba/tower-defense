@@ -5,6 +5,7 @@ class Canon extends Torre{
         y,
         alcance = 150,
         precio = 50,
+        
         // Atributos para las balas
         velBala = 10,
         dano = 5,
@@ -14,6 +15,10 @@ class Canon extends Torre{
     }){
         super({src, x, y, alcance, precio, velBala, dano, tiempoAtaque});
         this.radioEfecto = radioEfecto;
+
+        this.wBala = 10;
+        this.hBala = 10;
+        this.srcBala = "../../img/bala_canon.png";
     }
     mover(){
         // Funcionamiento de las balas

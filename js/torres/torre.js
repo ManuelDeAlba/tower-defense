@@ -5,6 +5,7 @@ class Torre{
         y,
         alcance = 150,
         precio = 50,
+        
         // Atributos para las balas
         velBala = 10,
         dano = 5,
@@ -16,25 +17,32 @@ class Torre{
         this.alcance = alcance;
         this.velBala = velBala;
         this.dano = dano;
+        
+        this.precio = precio;
+        this.balas = [];
 
         this.img = new Image();
         this.img.src = src;
+        
         // Hace que al principio apunte a donde salen los enemigos
         this.angulo = Math.atan2(canvas.height/2 - this.y, 0 - this.x);
+
+        // En este caso, la bala es mas larga que ancha
+        // Para la bala de cañon, se redefinen estos atributos
+        // Y para cada clase diferente, se redefine la imagen
+        this.wBala = 5;
+        this.hBala = 10;
+        this.srcBala = "../../img/bala.png";
         
         this.tiempoAtaque = tiempoAtaque;
         this.contadorAtaque = 0;
-
-        this.precio = precio;
-
-        this.balas = [];
     }
     dibujar(){
         // Alcance
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.alcance, 0, 2 * Math.PI);
-        ctx.fill();
+        // ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, this.alcance, 0, 2 * Math.PI);
+        // ctx.fill();
 
         // Torre
         ctx.save();
@@ -59,7 +67,7 @@ class Torre{
             let velX = Math.cos(this.angulo) * this.velBala;
             let velY = Math.sin(this.angulo) * this.velBala;
             
-            this.balas.push(new Bala({x: this.x, y: this.y, velX, velY, dano: this.dano}));
+            this.balas.push(new Bala({x: this.x, y: this.y, w: this.wBala, h: this.hBala, velX, velY, dano: this.dano, srcBala: this.srcBala}));
             this.contadorAtaque = 0;
         }
     }

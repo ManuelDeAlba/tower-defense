@@ -5,11 +5,12 @@ class Hielo extends Torre{
         y,
         alcance = 150,
         precio = 50,
+        
         // Atributos para las balas
         velBala = 10,
         tiempoAtaque = 60,
 
-        factorDisminucion = 0.6,
+        factorDisminucion = 0.7,
         tiempoCongelado = 60,
         radioEfecto = 50
     }){
@@ -17,6 +18,8 @@ class Hielo extends Torre{
         this.factorDisminucion = factorDisminucion;
         this.tiempoCongelado = tiempoCongelado;
         this.radioEfecto = radioEfecto;
+
+        this.srcBala = "../../img/bala_hielo.png";
     }
     mover(){
         // Funcionamiento de las balas

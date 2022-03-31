@@ -74,38 +74,42 @@ class Torre{
             this.contadorAtaque = 0;
         }
     }
+    colisionEnemigo(bala){
+        // Choque de bala con enemigo
+        enemigos.forEach(enemigo => {
+            if(bala.colision(enemigo)){
+                // Sumar el dinero de acuerdo al daño de la bala y de la vida restante
+                if(enemigo.nivel >= bala.dano) dinero += bala.dano;
+                else dinero += enemigo.nivel;
+
+                enemigo.nivel -= bala.dano;
+
+                // Se crean las particulas
+                for(let i = 0; i < cantParticulas; i++){
+                    particulas.push(new Particula({x: enemigo.x, y: enemigo.y, color: enemigo.color}));
+                }
+
+                bala.estado = 0;
+            }
+        })
+    }
     mover(){
         // Funcionamiento de las balas
-        this.balas.forEach((bala, indiceBala) => {
+        this.balas.forEach(bala => {
             bala.mover();
     
-            // Choque de bala con enemigo
-            enemigos.forEach(enemigo => {
-                if(bala.colision(enemigo)){
-                    // Sumar el dinero de acuerdo al daño de la bala y de la vida restante
-                    if(enemigo.nivel >= bala.dano) dinero += bala.dano;
-                    else dinero += enemigo.nivel;
-    
-                    enemigo.nivel -= bala.dano;
-    
-                    // Se crean las particulas
-                    for(let i = 0; i < cantParticulas; i++){
-                        particulas.push(new Particula({x: enemigo.x, y: enemigo.y, color: enemigo.color}));
-                    }
-    
-                    bala.estado = 0;
-                }
-            })
-
-            // Se borran todos los enemigos y balas necesarios
-            this.balas = this.balas.filter(b => b.estado);
-    
+            this.colisionEnemigo(bala);
+            
             // Borrar las balas que salen del canvas
             if(bala.x < 0 || bala.x + bala.w > canvas.width || bala.y < 0 || bala.y + bala.h > canvas.height){
-                this.balas.splice(indiceBala, 1);
+                bala.estado = 0;
             }
         })
 
+        // Se borran las balas
+        this.balas = this.balas.filter(bala => bala.estado);
+
+        // Dibuja la torre
         this.dibujar();
 
         // Ataca al enemigo que este en primer lugar

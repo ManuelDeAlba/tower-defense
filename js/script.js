@@ -20,7 +20,7 @@ let torresDisponibles = [
         // Hielo
         clase: "hielo",
         src: "../img/hielo.png",
-        alcance: 120,
+        alcance: 130,
         velBala: 10,
         tiempoAtaque: 60,
         factorDisminucion: 0.7,
@@ -52,7 +52,7 @@ let torresDisponibles = [
         // Canon
         clase: "canon",
         src: "../img/canon.png",
-        alcance: 80,
+        alcance: 110,
         velBala: 10,
         dano: 10,
         tiempoAtaque: 60 * 3,
@@ -62,6 +62,7 @@ let torresDisponibles = [
 ];
 let torreSeleccionada = 0;
 let quitandoTorre = 0;
+let rTorre = canvas.width / 13 / 2;
 
 let juegoTerminado = false;
 let dinero = 100;
@@ -145,11 +146,18 @@ function comprobarEstadoJuego(){
     ctx.restore();
 }
 
+function redondearPosicionTorre(x, y){
+    let tamTorre = rTorre * 2;
+    x = Math.floor(x / tamTorre) * (tamTorre) + rTorre;
+    y = Math.floor(y / tamTorre) * (tamTorre) + rTorre;
+
+    return [x, y];
+}
+
 let timeout;
-function modificarTorre(x, y){
+function modificarTorre(xMouse, yMouse){
     // Posiciones redondeadas
-    x = Math.floor(x / 40) * 40 + 20;
-    y = Math.floor(y / 40) * 40 + 20;
+    let [x, y] = redondearPosicionTorre(xMouse, yMouse);
 
     if(quitandoTorre){
         let posTorre = torres.findIndex(torre => torre.x == x && torre.y == y);
@@ -174,7 +182,7 @@ function modificarTorre(x, y){
     }
 
     // Si la posicion es valida, pone la torre redondeando para que no se encimen
-    if(y < 10 || y > 14){
+    if(y < 5 * rTorre * 2 || y > 8 * rTorre * 2){
         let lugarDisponible = true;
 
         // Se verifica si está disponible el espacio para poner la torre
@@ -189,7 +197,6 @@ function modificarTorre(x, y){
             let config = {
                 x,
                 y,
-                r: 20,
                 ...torresDisponibles[torreSeleccionada]
             };
             dinero -= config.precio;
@@ -272,11 +279,10 @@ canvas.addEventListener('click', e => {
 })
 
 canvas.addEventListener('mousemove', e => {
-    let x = e.clientX - canvas.getBoundingClientRect().left;
-    let y = e.clientY - canvas.getBoundingClientRect().top;
+    let xMouse = e.clientX - canvas.getBoundingClientRect().left;
+    let yMouse = e.clientY - canvas.getBoundingClientRect().top;
 
-    x = Math.floor(x / 40) * 40 + 20;
-    y = Math.floor(y / 40) * 40 + 20;
+    let [x, y] = redondearPosicionTorre(xMouse, yMouse);
 
     let torre = torres.find(torre => torre.x == x && torre.y == y);
 

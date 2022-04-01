@@ -13,7 +13,6 @@ class Torre{
     }){
         this.x = x;
         this.y = y;
-        this.r = 20;
         this.alcanceVisible = false;
         this.alcance = alcance;
         this.velBala = velBala;
@@ -54,7 +53,7 @@ class Torre{
         // El Math.PI/2 es para corregir el angulo
         ctx.rotate(this.angulo + Math.PI/2);
 
-        ctx.drawImage(this.img, -this.r, -this.r, this.r * 2, this.r * 2);
+        ctx.drawImage(this.img, -rTorre, -rTorre, rTorre * 2, rTorre * 2);
 
         ctx.restore();
 

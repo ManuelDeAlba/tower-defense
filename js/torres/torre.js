@@ -18,6 +18,7 @@ class Torre{
         this.alcance = alcance;
         this.velBala = velBala;
         this.dano = dano;
+        this.enemigosDerrotados = 0;
         
         this.precio = precio;
         this.balas = [];
@@ -56,6 +57,19 @@ class Torre{
         ctx.drawImage(this.img, -this.r, -this.r, this.r * 2, this.r * 2);
 
         ctx.restore();
+
+        // Enemigos derrotados
+        if(this.alcanceVisible){
+            ctx.save();
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(this.enemigosDerrotados, this.x, this.y);
+            ctx.fillStyle = "#000";
+            ctx.fillText(this.enemigosDerrotados, this.x + 1, this.y + 1);
+            ctx.restore();
+        }
     }
     distancia(enemigo){
         return Math.hypot(this.x - enemigo.x, this.y - enemigo.y);
@@ -83,6 +97,8 @@ class Torre{
                 else dinero += enemigo.nivel;
 
                 enemigo.nivel -= bala.dano;
+
+                if(enemigo.nivel <= 0) this.enemigosDerrotados++;
 
                 // Se crean las particulas
                 for(let i = 0; i < cantParticulas; i++){

@@ -41,6 +41,8 @@ class Canon extends Torre{
                         else dinero += e.nivel;
 
                         e.nivel -= bala.dano;
+                        
+                        if(enemigo.nivel <= 0) this.enemigosDerrotados++;
 
                         // Se crean las particulas
                         for(let i = 0; i < cantParticulas; i++){

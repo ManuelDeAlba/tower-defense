@@ -72,7 +72,7 @@ const limiteParticulas = 500;
 const cantParticulas = 3;
 
 // Config creacion enemigos
-let tiempoAumentarDificultad = 60 * 7;
+let tiempoAumentarDificultad = 60 * 8;
 let i = 0;
 let limiteTiempoEnemigos = 1; // Tiene que ser minimo 1 o no funciona el modulo
 let tiempoEnemigos = 120;

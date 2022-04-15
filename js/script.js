@@ -108,12 +108,10 @@ function crearBotones(){
             btnBorrar.classList.remove('activo');
 
             // Se pone activo el boton al que se le dio click
-            botones.forEach(btn => {
-                btn.classList.remove("activo");
-                boton.classList.add("activo");
-    
-                torreSeleccionada = boton.dataset.torre;
-            })
+            botones.forEach(btn => btn.classList.remove("activo"));
+            
+            boton.classList.add("activo");
+            torreSeleccionada = boton.dataset.torre;
         })
     })
 }
@@ -162,7 +160,7 @@ function modificarTorre(xMouse, yMouse){
     if(quitandoTorre){
         let posTorre = torres.findIndex(torre => torre.x == x && torre.y == y);
         if(posTorre != -1){
-            // Si solo queda una torre, no la elimina, porque puede no tener dineros
+            // Si solo queda una torre, no la elimina, porque puede no tener dinero
             // y se queda sin nada que hacer
             if(torres.length == 1){
                 mensajes.push(new Mensaje({x, y, msg: "No puedes borrar tu última torre"})); 
@@ -233,7 +231,7 @@ function loop(){
     })
     
     // Torres
-    torres.forEach(torre => torre.mover())
+    torres.forEach(torre => torre.mover());
 
     // Enemigos
     crearEnemigos();
@@ -279,6 +277,7 @@ canvas.addEventListener('click', e => {
 })
 
 canvas.addEventListener('mousemove', e => {
+    // Mostrar el alcance de la torre cuando se hace hover
     let xMouse = e.clientX - canvas.getBoundingClientRect().left;
     let yMouse = e.clientY - canvas.getBoundingClientRect().top;
 

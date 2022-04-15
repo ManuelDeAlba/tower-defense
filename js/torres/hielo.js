@@ -19,7 +19,7 @@ class Hielo extends Torre{
         this.tiempoCongelado = tiempoCongelado;
         this.radioEfecto = radioEfecto;
 
-        this.srcBala = "../../img/bala_hielo.png";
+        this.srcBala = "./img/bala_hielo.png";
     }
     colisionEnemigo(bala){
         // Choque de bala con enemigo

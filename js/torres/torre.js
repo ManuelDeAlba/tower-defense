@@ -33,7 +33,7 @@ class Torre{
         // Y para cada clase diferente, se redefine la imagen
         this.wBala = 5;
         this.hBala = 10;
-        this.srcBala = "../../img/bala.png";
+        this.srcBala = "./img/bala.png";
         
         this.tiempoAtaque = tiempoAtaque;
         this.contadorAtaque = 0;

@@ -3,13 +3,13 @@ const ctx = canvas.getContext('2d');
 const btnBorrar =document.querySelector('.controles__borrar');
 
 const fondo = new Image();
-fondo.src = "../img/fondo.png";
+fondo.src = "./img/fondo.png";
 
 let torresDisponibles = [
     {
         // Normal (azul)
         clase: "torre",
-        src: "../img/tanque_azul.png",
+        src: "./img/tanque_azul.png",
         alcance: 150,
         velBala: 10,
         dano: 5,
@@ -19,7 +19,7 @@ let torresDisponibles = [
     {
         // Hielo
         clase: "hielo",
-        src: "../img/hielo.png",
+        src: "./img/hielo.png",
         alcance: 130,
         velBala: 10,
         tiempoAtaque: 60,
@@ -31,7 +31,7 @@ let torresDisponibles = [
     {
         // Metralleta (rojo)
         clase: "torre",
-        src: "../img/tanque_rojo.png",
+        src: "./img/tanque_rojo.png",
         alcance: 225,
         velBala: 20,
         dano: 1,
@@ -41,7 +41,7 @@ let torresDisponibles = [
     {
         // Francotirador (verde)
         clase: "torre",
-        src: "../img/tanque_verde.png",
+        src: "./img/tanque_verde.png",
         alcance: 1000,
         velBala: 30,
         dano: 30,
@@ -51,7 +51,7 @@ let torresDisponibles = [
     {
         // Canon
         clase: "canon",
-        src: "../img/canon.png",
+        src: "./img/canon.png",
         alcance: 110,
         velBala: 10,
         dano: 10,
@@ -93,7 +93,7 @@ function crearBotones(){
         html += `
             <div class="controles__boton controles__torre ${indice == 0 && "activo"}" data-torre="${indice}">
                 <p>$${torre.precio}</p>
-                <img src="${torre.src.slice(1)}" draggable="false">
+                <img src="${torre.src}" draggable="false">
             </div>
         `;
     })

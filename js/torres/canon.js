@@ -18,7 +18,7 @@ class Canon extends Torre{
 
         this.wBala = 20;
         this.hBala = 20;
-        this.srcBala = "../../img/bala_canon.png";
+        this.srcBala = "./img/bala_canon.png";
     }
     colisionEnemigo(bala){
         // Choque de bala con enemigo
